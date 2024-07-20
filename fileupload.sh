@@ -19,3 +19,7 @@ BUCKET_NAME="fileupload5678483"
 
 
 aws s3 cp "$FULLPATH" "s3://$BUCKET_NAME/$FILENAME"
+
+FILESIZE=$(stat -f%z "$FULLPATH")
+
+pv -s "$FILESIZE" "$FULLPATH" | aws s3 cp - "s3://$BUCKET_NAME/$FILENAME"
